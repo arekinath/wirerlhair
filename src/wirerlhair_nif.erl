@@ -31,9 +31,24 @@
 %% THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%
 
+%% @private
 -module(wirerlhair_nif).
 
+-export([
+    encoder_create/2,
+    encode/2,
+    decoder_create/2,
+    decode/3,
+    recover/1
+    ]).
+
+-export_type([
+    ctx/0
+    ]).
+
 -on_load(init/0).
+
+-opaque ctx() :: reference().
 
 try_paths([Last], BaseName) ->
     filename:join([Last, BaseName]);
@@ -60,3 +75,25 @@ init() ->
     end,
     SoName = try_paths(Paths1, "wirerlhair_nif"),
     erlang:load_nif(SoName, 0).
+
+-type msg() :: iolist().
+-type bytes() :: integer().
+-type block_size() :: bytes().
+-type msg_size() :: bytes().
+-type block_id() :: integer().
+-type block() :: binary().
+
+-spec encoder_create(msg(), block_size()) -> {ok, ctx()} | {error, term()}.
+encoder_create(_Msg, _BlockSize) -> error(no_nif).
+
+-spec encode(ctx(), block_id()) -> {ok, block()} | {error, term()}.
+encode(_Ctx, _BlockId) -> error(no_nif).
+
+-spec decoder_create(msg_size(), block_size()) -> {ok, ctx()} | {error, term()}.
+decoder_create(_MsgSize, _BlockSize) -> error(no_nif).
+
+-spec decode(ctx(), block_id(), block()) -> more_data | ok | {error, term()}.
+decode(_Ctx, _BlockId, _Block) -> error(no_nif).
+
+-spec recover(ctx()) -> {ok, msg()} | {error, term()}.
+recover(_Ctx) -> error(no_nif).
