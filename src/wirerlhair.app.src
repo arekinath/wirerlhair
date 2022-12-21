@@ -10,5 +10,8 @@
   {modules, []},
 
   {licenses, ["BSD-3-Clause"]},
-  {links, []}
+  {links, [
+        {"GitHub", "https://github.com/arekinath/wirerlhair"},
+        {"Wirehair", "https://github.com/catid/wirehair"}
+  ]}
  ]}.
